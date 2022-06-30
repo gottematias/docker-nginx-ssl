@@ -1,0 +1,21 @@
+version: "3.9"
+
+networks:
+    gotte-net:
+        external: true
+
+services:
+  proxyreverse:
+    image: nginx:1.23.0
+    container_name: proxy-reverse
+    restart: unless-stopped
+    environment:
+      PORT: 8443
+    ports:
+      - 8443:8443
+    volumes:
+      - ./ssl:/etc/nginx/ssl
+      - ./conf.d:/etc/nginx/conf.d
+    networks:
+      gotte-net:
+        ipv4_address: 190.160.0.203
